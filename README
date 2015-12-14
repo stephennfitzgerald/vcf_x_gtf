@@ -1,0 +1,31 @@
+you will need to have the perl module Vcf.pm installed.
+
+use anonymous ftp to ftp.sanger.ac.uk
+
+then 
+
+ftp> cd /pub/project/havana/vcf_test
+ftp> get test.tar.gz
+ftp> exit
+
+bash > gunzip test.tar.gz 
+bash > tar -xvf test.tar
+bash > cd test
+bash > perl t.pl --vcf_file data/mod_ex.vcf.gz --intron_offset 2 
+
+this runs the small (modified) example VCF file with the following tab delimited columns:
+
+seq_region position id ref_allele alt_allele gene_id transcript_id transcript_biotype feature_hit* exon_id cds**
+
+*feature_hit: if the variation falls within an exon (exon), an intron (intron) or within a specified number of bases of 
+the either end of an exon (the default value is 8bp and the value is set in the variable $intron_offset)
+
+**cds: Does the variation affect the CDS (0=No, 1=Yes)
+
+The script (t.pl) will use the following files in the data directory:
+EIEEgenes_gencode19.gtf (EIEE annotation in Gencode 19),
+EIEEgenes_loutre.GRCh38-GRCh37-lift.mapped (70 EIEE gene loutre annotation, lifted back to GRCh37),
+refseq_70_37backmap.gtf (EIEE Refseq annotation).
+to intersect with your input VCF file. In the example the input VCF file is mod_ex.vcf.gz, which is a modified version
+of the file (example.vcf.gz) given to us, such that the modified file has some varients which intersect with the genes 
+in the gtf files.
