@@ -44,6 +44,7 @@ foreach my $fh([$OD,\%OD],[$NW,\%NW],[$RF,\%RF]) {
  foreach my $trans( keys %{ $fh->[1] } ) {
   my $region = $fh->[1]->{$trans}->{'trans_region'};
   my $biotype = $fh->[1]->{$trans}->{'trans_type'};
+  next if $biotype eq 'retained_intron';
   my $vcf = Vcf->new(file => "$vcf_file", region=>"$region");
   $vcf->parse_header();
   while (my $x=$vcf->next_data_array()) {
