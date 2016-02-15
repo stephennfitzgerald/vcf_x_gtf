@@ -47,7 +47,7 @@ foreach my $fh([$OD,\%OD],[$NW,\%NW],[$RF,\%RF]) {
   my $vcf = Vcf->new(file => "$vcf_file", region=>"$region");
   $vcf->parse_header();
   while (my $x=$vcf->next_data_array()) {
-   my $snp = "$$x[0]:$$x[1]:$$x[2]:$$x[3]:$$x[4]";
+   my $snp = "$$x[0]:$$x[1]:$$x[2]:$$x[3]:$$x[4]:$$x[5]::$$x[6]:$$x[7]:$$x[8]";
    my $exon_ct = scalar keys %{ $fh->[1]->{$trans}->{'exon'} };
    my $found = 0;
    my $var_size = length($$x[3]) - 1; # if the alt allele is a deletion
@@ -103,7 +103,7 @@ foreach my $fh([$OD,\%OD],[$NW,\%NW],[$RF,\%RF]) {
 }
 
 foreach my $snp(keys %VC) {
- my($sr,$pos,$snp_id,$ref,$alt) = split':', $snp;
+ my($sr,$pos,$snp_id,$ref,$alt,$qual,$filter,$info,$format) = split':', $snp;
  foreach my $gene(keys %{ $VC{ $snp } }) {
   foreach my $trans(keys %{ $VC{ $snp }{ $gene } }) {
    my $trans_biotype = $VC{ $snp }{ $gene }{ $trans }{ 'biotype' };
@@ -112,11 +112,11 @@ foreach my $snp(keys %VC) {
    foreach my $int_ex(keys %{ $VC{ $snp }{ $gene }{ $trans } }) {
     next if ($int_ex eq 'biotype' || $int_ex eq 'CDS');
     if($int_ex eq 'intron') {
-     print join("\t", $sr,$pos,$snp_id,$ref,$alt,$gene,$trans,$trans_biotype,$int_ex,q{.},q{.}), "\n";
+     print join("\t", $sr,$pos,$snp_id,$ref,$alt,$qual,$filter,$info,$format,$gene,$trans,$trans_biotype,$int_ex,q{.},q{.}), "\n";
     }
     else {
      foreach my $exon(keys %{ $VC{ $snp }{ $gene }{ $trans }{ $int_ex } }) {
-      print join("\t", $sr,$pos,$snp_id,$ref,$alt,$gene,$trans,$trans_biotype,$int_ex,$exon,$cds), "\n";
+      print join("\t", $sr,$pos,$snp_id,$ref,$alt,$qual,$filter,$info,$format,$gene,$trans,$trans_biotype,$int_ex,$exon,$cds), "\n";
      }
     }
    }
