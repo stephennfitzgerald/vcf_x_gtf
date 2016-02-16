@@ -48,7 +48,7 @@ foreach my $fh([$OD,\%OD],[$NW,\%NW],[$RF,\%RF]) {
   my $vcf = Vcf->new(file => "$vcf_file", region=>"$region");
   $vcf->parse_header();
   while (my $x=$vcf->next_data_array()) {
-   my $snp = "$$x[0]:$$x[1]:$$x[2]:$$x[3]:$$x[4]:$$x[5]::$$x[6]:$$x[7]:$$x[8]";
+   my $snp = "$$x[0]:$$x[1]:$$x[2]:$$x[3]:$$x[4]:$$x[5]:$$x[6]:$$x[7]:$$x[8]";
    my $exon_ct = scalar keys %{ $fh->[1]->{$trans}->{'exon'} };
    my $found = 0;
    my $var_size = length($$x[3]) - 1; # if the alt allele is a deletion
