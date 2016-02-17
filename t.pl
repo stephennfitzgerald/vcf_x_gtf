@@ -17,7 +17,7 @@ my $help;
 my $usage = qq{USAGE:
  perl t.pl --help
  perl t.pl --vcf_file path/to/vcf_file (required) --intron_offset an_integer (optional)
- eg. perl t.pl --vcf_file test.vcf.gz
+ eg. perl t.pl --vcf_file test.vcf.gz > t.out
  
  required perl modules : Vcf.pm
 };

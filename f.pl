@@ -4,7 +4,7 @@ use Data::Dumper;
 
 
 my $usage = qq{USAGE:
- perl f.pl in_file
+ eg. perl f.pl t.out
 };
 
 open my $fh, '<', shift || help();
